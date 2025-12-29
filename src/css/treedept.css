@@ -1,0 +1,54 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.ds-title {
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.ds-tree {
+    position: relative;
+    padding-left: 1rem;
+    margin: 0;
+}
+
+.ds-tree ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-left: 0.5rem;
+    position: relative;
+}
+
+.ds-tree ul::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 2px;
+    background: #ffcb0b;
+}
+
+.ds-tree li {
+    position: relative;
+    padding: 0.5rem 0 0.5rem 2.5rem;
+}
+
+.ds-tree li::before {
+    content: '';
+    position: absolute;
+    top: 1.2em;
+    left: 0;
+    width: 2rem;
+    height: 2px;
+    background: #ffcb0b;
+    border-radius: 0 0 0 10px;
+}
+
+.ds-sub {
+    margin: 0;
+    color: #212529;
+}

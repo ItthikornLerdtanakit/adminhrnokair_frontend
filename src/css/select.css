@@ -1,0 +1,110 @@
+.gradient-bg {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    min-height: 100vh;
+}
+
+.status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.custom-select-btn {
+    border: 2px solid #ced4da;
+    border-radius: 8px;
+    background: white;
+    width: 180px;             /* 👈 fix ขนาดปุ่มไว้ ไม่ขยาย */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.custom-select-btn:hover {
+    border-color: #adb5bd;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.custom-select-btn:focus {
+    outline: none;
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* Scrollable dropdown menu when too many options */
+.dropdown-menu-custom {
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    max-height: 500px;         /* กำหนดความสูงสูงสุดของ dropdown */
+    overflow-y: auto;          /* เปิดให้เลื่อนแนวตั้ง */
+    overflow-x: hidden;        /* ป้องกัน scrollbar แนวนอน */
+    scrollbar-width: thin;     /* สำหรับ Firefox */
+    scrollbar-color: #adb5bd #f8f9fa; /* สีของ scrollbar */
+    min-width: 100% !important;
+    box-sizing: border-box;
+}
+
+.dropdown-item-custom {
+    padding: 10px 16px;
+    transition: background-color 0.2s;
+}
+
+.dropdown-item-custom:hover {
+    background-color: #e7f1ff;
+}
+
+.dropdown-item-custom.active {
+    background-color: #e7f1ff;
+}
+
+.chevron-rotate {
+    transition: transform 0.3s;
+}
+
+.chevron-rotate.open {
+    transform: rotate(180deg);
+}
+
+/* Optional: สไตล์ scrollbar สำหรับ Chrome/Edge/Safari */
+.dropdown-menu-custom::-webkit-scrollbar {
+    width: 6px;
+}
+
+.dropdown-menu-custom::-webkit-scrollbar-track {
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.dropdown-menu-custom::-webkit-scrollbar-thumb {
+    background-color: #adb5bd;
+    border-radius: 8px;
+}
+
+.dropdown-menu-custom::-webkit-scrollbar-thumb:hover {
+    background-color: #868e96;
+}
+
+/* ป้องกันข้อความ label ในปุ่มหรือรายการยาวเกิน */
+.dropdown-item-custom span, .custom-select-btn span {
+    display: inline-block;
+    white-space: nowrap;      /* ไม่ให้ตัดบรรทัด */
+    overflow: hidden;         /* ซ่อนส่วนที่เกิน */
+    text-overflow: ellipsis;  /* แสดง ... */
+    vertical-align: middle;   /* จัดตำแหน่งแนวตั้งให้สวย */
+}
+
+.custom-select-btn span {
+    flex-shrink: 1;           /* 👈 ป้องกันการขยาย */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.custom-select-wrapper, .custom-select-btn, .dropdown-menu-custom {
+    width: 200px !important;
+}
+
+.custom-select-wrapper {
+  position: relative;
+}

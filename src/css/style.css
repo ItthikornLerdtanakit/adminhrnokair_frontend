@@ -1,0 +1,161 @@
+body {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+.index {
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+input[type='radio'] {
+    border: 1px solid black;
+}
+
+.buttonnone {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.midpoint {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ใช้ซ่อนการแสดงผลสำหรับบางสิ่งที่ต้องการแสดงผลเฉพาะบนโทรศัพท์ */
+.moblie {
+    display: none;
+}
+
+.navbars {
+    height: 60px;
+    background-color: #ffcb0b;
+}
+
+.card {
+    border: 2px solid black;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    background-color: white;
+}
+
+.headers {
+    font-size: 20px;
+    font-weight: 500;
+    border-bottom: 2px solid black;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.headers p {
+    margin-bottom: 5px; /* เอาระยะขอบล่างออก */
+}
+
+.h-card {
+    width: 97%;
+    border: 1px solid #edf2f7;
+    border-radius: 1rem;
+    box-shadow: 0 12px 36px rgba(2, 6, 23, .06);
+    background: #fff;
+}
+
+.code-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .4rem .7rem;
+    border-radius: 999px;
+    background: #eef4ff;
+    color: #1d4ed8;
+    border: 1px solid #dbeafe;
+    font-weight: 700;
+    letter-spacing: .03em;
+}
+
+/* กำหนดรูปแบบของ Radio */
+.custom-radio {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+/* ซ่อน Radio Button ดั้งเดิม */
+.radio-input {
+    display: none;
+}
+
+/* กำหนดสไตล์สำหรับตัว radio ใหม่ */
+.checkmark {
+    width: 24px;
+    height: 24px;
+    background-color: #ddd;
+    border-radius: 25%;
+    display: inline-block;
+    position: relative;
+    margin-right: 8px;
+    transition: background-color 0.3s ease;
+}
+
+/* กำหนดสไตล์เมื่อตัวเลือกถูกเลือกแล้ว */
+.radio-input:checked + .checkmark {
+    background-color: #1d1b20;
+}
+
+.radio-input:checked + .checkmark::after {
+    content: '✓';
+    color: white;
+    font-size: 18px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.form-header {
+    text-align: center;
+    padding-bottom: 20px;
+    border-bottom: 3px solid #667eea;
+}
+
+.form-header h2 {
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.form-header p {
+    margin: 0;
+}
+
+.title-section {
+    font-size: 1.3rem;
+    font-weight: 600;
+    border-bottom: 3px solid black;
+    padding-bottom: 10px;
+}
+
+.custom-loading-popup {
+    height: 250px;
+    max-height: 80%;
+}
+
+/* สำหรับหน้าจอที่ความกว้างสูงสุด 767pixel */
+@media screen and (max-width: 767px) {
+    .margintop {
+        margin-top: 50px;
+    }
+
+    /* ใช้ซ่อนการแสดงผลสำหรับบางสิ่งที่ต้องการแสดงผลเฉพาะบนคอม */
+    .pc {
+        display: none;
+    }
+
+    /* ใช้ซ่อนการแสดงผลสำหรับบางสิ่งที่ต้องการแสดงผลเฉพาะบนโทรศัพท์ */
+    .moblie {
+        display: block;
+    }
+}

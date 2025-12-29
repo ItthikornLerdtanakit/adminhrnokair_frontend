@@ -1,0 +1,88 @@
+.sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    min-height: 100vh;
+    background: #ffcb0b;
+    color: black;
+    transition: all 0.3s;
+}
+
+.sidebar .nav-link, .sidebar .navbar-brand {
+    color: black;
+}
+
+.sidebar .nav-link.active {
+    background: #e6b800;
+    color: black;
+    font-weight: bold;
+    transform: scale(1.02);
+}
+
+.sidebar .nav-link:hover {
+    background: #e6b800;
+    color: black;
+}
+
+.sidebar .nav-link .bi {
+    font-size: 1rem;
+    vertical-align: middle;
+}
+
+.sidebar .section-title {
+    margin-top: 1.25rem;
+    margin-bottom: 0.25rem;
+    font-size: 0.77rem;
+    letter-spacing: 0.03em;
+    color: #adb5bd;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.content {
+    padding: 2rem;
+    flex: 1;
+}
+
+.logonokair {
+    height: 30px;
+}
+
+@media (max-width: 991.98px) {
+    .sidebar {
+        position: fixed;
+        z-index: 1040;
+        left: -250px;
+        top: 0;
+        height: 100vh;
+        transition: left 0.3s;
+    }
+
+    .sidebar.show {
+        left: 0;
+    }
+
+    .navbar {
+        background-color: #ffcb0b;
+        color: black;
+    }
+
+    .navbar-toggler, .navbar-toggler:focus {
+        outline: none;
+        box-shadow: none;
+        border: none;
+    }
+
+
+    .navbar.d-lg-none {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        z-index: 1080;
+        border-radius: 0;
+    }
+
+    .content {
+        padding: 56px 1rem 1rem 1rem;
+    }
+}
