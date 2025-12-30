@@ -114,7 +114,7 @@ const Employee = () => {
                             <Table striped hover className='align-middle tbresponsive' style={{ fontSize: 14 }}>
                                 <thead className='table-dark'>
                                     <tr className='text-center'>
-                                        <th>EmployeeCode</th>
+                                        <th>EmployeeCode{FilterEmployees.length}</th>
                                         <th>Name_English</th>
                                         <th>Position</th>
                                         <th>Department</th>
@@ -156,7 +156,7 @@ const Employee = () => {
                                 </tbody>
                             </Table>
                         </Row>
-                        <Pagination CountEmployee={FilterEmployees.length} ItemsPerPage={ItemsPerPage} CurrentNumberPage={CurrentNumberPage} setCurrentNumberPage={setCurrentNumberPage} />
+                        <Pagination CountEmployee={SearchEmployee.length} ItemsPerPage={ItemsPerPage} CurrentNumberPage={CurrentNumberPage} setCurrentNumberPage={setCurrentNumberPage} />
                     </Card.Body>
                 </Card>
             </Container>

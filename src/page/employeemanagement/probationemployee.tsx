@@ -157,7 +157,7 @@ const Probationemployee = () => {
                                 </tbody>
                             </Table>
                         </Row>
-                        <Pagination CountEmployee={FilterEmployees.length} ItemsPerPage={ItemsPerPage} CurrentNumberPage={CurrentNumberPage} setCurrentNumberPage={setCurrentNumberPage} />
+                        <Pagination CountEmployee={SearchEmployee.length} ItemsPerPage={ItemsPerPage} CurrentNumberPage={CurrentNumberPage} setCurrentNumberPage={setCurrentNumberPage} />
                     </Card.Body>
                 </Card>
             </Container>
