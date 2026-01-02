@@ -218,3 +218,23 @@ export const update_emailtemplate = async (data: EmailTemplateItem[]) => {
         console.error(error);
     }
 }
+
+// ดึงข้อมูล Event ของการประเมินพนักงานภายในบริษัท
+export const get_event = async () => {
+    try {
+        const response = await axios.get(ipaddress + import.meta.env.VITE_GET_EVENT);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// จัดการข้อมูล Event ของการประเมินพนักงานภายในบริษัท
+export const manage_event = async (id: number, topic: string, description: string, evaluate: string, startdate: string, enddate: string, statussave: string) => {
+    try {
+        const response = await axios.post(ipaddress + import.meta.env.VITE_MANAGE_EVENT, { id, topic, description, evaluate, startdate, enddate, statussave });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}

@@ -17,9 +17,30 @@ export const checkvalueselect = (value: string | number) => {
 }
 
 // แปลงวันที่ให้เป็นรูปแบบไทย
-export const FormatDate = (textdate: string) => {
+export const formatdate = (textdate: string) => {
     const d = new Date(textdate);
     return Number.isNaN(d.getTime()) ? '-' : textdate.replace(/(\d{4})-(\d{2})-(\d{2})/, '$3/$2/$1');
+};
+
+export const formatdatefull = (date?: Date) => {
+    if (!date) return '-';
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+};
+
+export const formatdatefull_savedb = (date?: Date) => {
+    if (!date) return '-';
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${year}-${month}-${day}`;
+};
+
+export const parsethaidate = (str: string) => {
+    const [d, m, y] = str.split('/');
+    return new Date(+y, +m - 1, +d);
 };
 
 // เวลาการทำงาน

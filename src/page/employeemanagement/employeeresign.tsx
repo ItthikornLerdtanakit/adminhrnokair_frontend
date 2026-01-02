@@ -17,7 +17,7 @@ import { get_employee, get_department } from '../component/connectdatabase';
 import { CustomSelect } from '../component/customselects';
 import Pagination from '../component/pagination';
 import Modaleditemployee from '../component/modal/modaleditemployee';
-import { FormatDate } from '../component/functions';
+import { formatdate } from '../component/functions';
 
 import { Search, Edit } from 'lucide-react';
 
@@ -146,8 +146,8 @@ const Employeeresign = () => {
                                                     {emp.employee_status}
                                                 </span>
                                             </td>
-                                            <td className='text-center'>{FormatDate(emp.employee_startdate)}</td>
-                                            <td className='text-center'>{FormatDate(emp.employee_enddate)}</td>
+                                            <td className='text-center'>{formatdate(emp.employee_startdate)}</td>
+                                            <td className='text-center'>{formatdate(emp.employee_enddate)}</td>
                                             <td className='text-center'>
                                                 <Button size='sm' variant='outline-primary' onClick={() => OpenModalEditApplication(emp)}>
                                                     <Edit size={16} />

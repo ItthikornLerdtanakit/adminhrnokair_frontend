@@ -4,7 +4,14 @@ import { jwtDecode } from 'jwt-decode';
 import type { CustomJwtPayload } from './interfaces';
 
 const ACCESS: Record<string, { allowed: string[]; default: string }> = {
-    admin: { allowed: ['/dashboard', '/application_setting', '/employee', '/addemployee', '/importemployee', '/probationemployee', '/employeeresign', '/department'], default: '/dashboard' }
+    admin: { allowed: [
+        '/dashboard',
+        '/application_setting',
+        '/employee', '/addemployee', '/importemployee', '/probationemployee', '/employeeresign',
+        '/department',
+        '/emailconfig', '/emailtemplate',
+        '/manageevent'
+    ], default: '/dashboard' }
 };
 
 const tokens = import.meta.env.VITE_TOKEN;

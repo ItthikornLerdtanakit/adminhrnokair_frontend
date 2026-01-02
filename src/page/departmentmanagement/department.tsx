@@ -137,7 +137,7 @@ const Index = () => {
             <Container fluid className='py-4 margintop'>
                 <Row>
                     <Col md={12} className='midpoint'>
-                        <h1>Department Management</h1>
+                        <h1 className='titletext'>Department Management</h1>
                     </Col>
                 </Row>
                 <Row>

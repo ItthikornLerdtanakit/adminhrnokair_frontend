@@ -52,7 +52,7 @@ const Sidebar = (item: NUmberItem) => {
         <>
             <nav className='navbar d-lg-none'>
                 <div className='container-fluid'>
-                    <button className='navbar-toggler' type='button' id='sidebarToggle' ref={toggleRef}>
+                    <button className='navbar-toggler' id='sidebarToggle' ref={toggleRef}>
                         <span className='navbar-toggler-icon'></span>
                     </button>
                     <span className='navbar-brand'><img className='logonokair' src={logo} alt='logo navbar' /></span>
@@ -82,7 +82,7 @@ const Sidebar = (item: NUmberItem) => {
                         <li><a className={'nav-link' + nav_active(page, 10)} href='/emailtemplate'><span className='me-2'><BsEnvelope /></span> Email Template</a></li>
 
                         <li className='section-title' style={{ color: 'black' }}>PMS System</li>
-                        <li><a className={'nav-link' + (page === 0 ? ' active' : '')} href='/' onClick={(e) => { e.preventDefault(); alertwarning('ยังไม่ได้เปิดการใช้งาน'); }}><span className='me-2'><BsCalendar /></span> Event Evaluation</a></li>
+                        <li><a className={'nav-link' + (page === 11 ? ' active' : '')} href='/manageevent'><span className='me-2'><BsCalendar /></span> Event Evaluation</a></li>
                         <li><a className={'nav-link' + (page === 0 ? ' active' : '')} href='/' onClick={(e) => { e.preventDefault(); alertwarning('ยังไม่ได้เปิดการใช้งาน'); }}><span className='me-2'><BsFileEarmarkText /></span>  Question Evaluation</a></li>
                         <li><a className={'nav-link' + (page === 0 ? ' active' : '')} href='/' onClick={(e) => { e.preventDefault(); alertwarning('ยังไม่ได้เปิดการใช้งาน'); }}><span className='me-2'><BsJournalText /></span>  System Logs</a></li>
 

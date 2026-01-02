@@ -9,6 +9,7 @@ import './css/sidebar.css';
 import './css/table.css';
 import './css/treedept.css';
 import './css/select.css';
+import './css/calendar.css';
 
 // ทั้งหมด
 import AuthGuard from './page/component/authguard';
@@ -23,13 +24,14 @@ import EmployeeResign from './page/employeemanagement/employeeresign';
 import Department from './page/departmentmanagement/department';
 import EmailConfig from './page/emailmanagement/emailconfig';
 import EmailTemplate from './page/emailmanagement/emailtemplate';
+import ManageEvent from './page/pmssystem/manageevent';
 import DepartmentKPI from './page/departmentkpi/departmentkpi';
 
 const Main = () => {
     return (
         <BrowserRouter>
             <Routes>
-                {/* <Route element={<AuthGuard />}> */}
+                <Route element={<AuthGuard />}>
                     <Route path='/' element={<Index />}></Route>
                     <Route path='/dashboard' element={<Dashboard />}></Route>
                     <Route path='/application_setting' element={<ApplicationSetting />}></Route>
@@ -41,8 +43,9 @@ const Main = () => {
                     <Route path='/department' element={<Department />}></Route>
                     <Route path='/emailconfig' element={<EmailConfig />}></Route>
                     <Route path='/emailtemplate' element={<EmailTemplate />}></Route>
+                    <Route path='/manageevent' element={<ManageEvent />}></Route>
                     <Route path='/departmentkpi' element={<DepartmentKPI />}></Route>
-                {/* </Route> */}
+                </Route>
             </Routes>
         </BrowserRouter>
     )

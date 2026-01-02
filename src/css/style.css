@@ -1,6 +1,24 @@
+@font-face {
+    font-family: 'Aptos';
+    src: url('./font/Aptos.ttf');
+}
+
+@font-face {
+    font-family: 'Aptos';
+    src: url('./font/Aptos-Bold.ttf');
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: 'NotoSansThai';
+    src: url('./font/NotoSansThai-VariableFont_wdth,wght.ttf');
+}
+
 body {
+    font-family: 'Aptos', 'NotoSansThai', sans-serif;
     min-height: 100vh;
     background-color: #f8f9fa;
+    font-size: 16px;
 }
 
 .index {
@@ -143,6 +161,55 @@ input[type='radio'] {
     max-height: 80%;
 }
 
+.titletext {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.boxevent {
+    min-height: 230px;
+    background-color: white;
+    border-radius: 25px;
+    box-shadow: 0px 0px 50px 5px rgba(128, 128, 128, 0.3);
+    padding-left: 20px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.event-dates{
+  margin-top: auto; /* ดันลงล่าง */
+}
+
+
+/* ใช้สำหรับปรับแต่งหัวข้อกิจกรรม */
+.titleevent {
+    font-size: 22px;
+}
+
+.wordwarp {
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+/* ใช้สำหรับการปรับแต่งปุ่มทั้งหมด */
+.btns {
+    width: 80%;
+    border-radius: 25px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+/* ใช้สำหรับความต้องการ่ อยู่ด้านขวา และ อยู่ด้านล่าง (ล่างขวาจอ) */
+.bottomright {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
 /* สำหรับหน้าจอที่ความกว้างสูงสุด 767pixel */
 @media screen and (max-width: 767px) {
     .margintop {
@@ -157,5 +224,42 @@ input[type='radio'] {
     /* ใช้ซ่อนการแสดงผลสำหรับบางสิ่งที่ต้องการแสดงผลเฉพาะบนโทรศัพท์ */
     .moblie {
         display: block;
+    }
+
+    .boxevent {
+        font-size: 16px;
+    }
+
+    /* ใช้สำหรับปรับแต่งหัวข้อกิจกรรม */
+    .titleevent {
+        font-size: 18px;
+    }
+
+    /* ใช้สำหรับการปรับแต่งปุ่มทั้งหมด */
+    .btns {
+        width: 80%;
+        display: block;
+        margin: auto auto 10px auto; 
+        font-size: 12px;
+    }
+
+    /* ใช้สำหรับความต้องการ่ อยู่ด้านขวา และ อยู่ด้านล่าง (ล่างขวาจอ) */
+    .bottomright {
+        margin-top: 70px;
+    }
+}
+
+@media screen and (min-width: 1001px) and (max-width: 1200px) {
+    /* ใช้สำหรับการปรับแต่งปุ่มทั้งหมด */
+    .btns {
+        width: 80%;
+        display: block;
+        margin: auto auto 10px auto;
+    } 
+}
+
+@media screen and (max-width: 1400px) {
+    .boxevent {
+        min-height: 300px;
     }
 }

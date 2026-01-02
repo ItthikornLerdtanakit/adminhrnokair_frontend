@@ -103,3 +103,14 @@ export interface EmailTemplateItem {
     emailtemplate_subject: string;
     emailtemplate_description: string;
 }
+
+export interface EventItem {
+    event_id?: number;
+    event_topic: string;
+    event_evaluate: string;
+    event_description: string;
+    event_startdate: string;
+    event_enddate: string;
+    event_statusdate: string;
+    event_submit: string;
+}
