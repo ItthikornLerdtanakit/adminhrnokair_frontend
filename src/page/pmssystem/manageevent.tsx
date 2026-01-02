@@ -9,7 +9,7 @@ import Form from 'react-bootstrap/Form';
 import type { EventItem } from '../component/interfaces';
 
 import Sidebar from '../component/sidebar';
-import { get_event, manage_event } from '../component/connectdatabase';
+import { get_event, manage_event, delete_event } from '../component/connectdatabase';
 import { alertquestion, alertsmall, alerterror } from '../component/sweetalerttwo';
 import DateRangeCalendar from '../component/calendar';
 import { formatdatefull, formatdatefull_savedb, parsethaidate, checkvalueinput } from '../component/functions';
@@ -31,10 +31,14 @@ const Manageevent = () => {
         setEvent(result);
     }
 
-    const deleteevent = async (topic: string) => {
+    const deleteevent = async (id: number, topic: string) => {
         const response = await alertquestion(`Do you want to delete event ${topic} ?`);
         if (response.isConfirmed) {
-            console.log('yes');
+            const result = await delete_event(id);
+            if (result === 'success') {
+                alertsmall('success', 'Delete Event Successfully.');
+                get_database();
+            }
         }
     }
 
@@ -122,7 +126,7 @@ const Manageevent = () => {
                                 <Row style={{ marginTop: 20 }}>
                                     <Col md={12} style={{ textAlign: 'center' }}>
                                         <Button variant='warning' className='btns' style={{ width: 150 }} onClick={() => { setEventSelect(data); setPage('two'); }}><b>Edit</b></Button>
-                                        <Button variant='warning' className='btns' style={{ width: 150, color: 'red', backgroundColor: 'white', border: '1px solid red' }} onClick={() => deleteevent(data.event_topic)}><b>Delete</b></Button>
+                                        <Button variant='warning' className='btns' style={{ width: 150, color: 'red', backgroundColor: 'white', border: '1px solid red' }} onClick={() => deleteevent(Number(data.event_id), data.event_topic)}><b>Delete</b></Button>
                                     </Col>
                                 </Row>
                             </Col>

@@ -238,3 +238,13 @@ export const manage_event = async (id: number, topic: string, description: strin
         console.error(error);
     }
 }
+
+// ลบข้อมูล Event ออกไป
+export const delete_event = async (event_id: number) => {
+    try {
+        const response = await axios.delete(ipaddress + import.meta.env.VITE_DELETE_EVENT + event_id);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
