@@ -21,7 +21,13 @@ body {
     font-size: 16px;
 }
 
+fieldset, legend {
+    all: revert;
+    border-radius: 5px;
+}
+
 .index {
+    display: flex;
     min-height: 100vh;
     flex-direction: column;
 }
@@ -181,7 +187,7 @@ input[type='radio'] {
 }
 
 .event-dates{
-  margin-top: auto; /* ดันลงล่าง */
+    margin-top: auto; /* ดันลงล่าง */
 }
 
 
@@ -209,6 +215,82 @@ input[type='radio'] {
     justify-content: flex-end;
     align-items: flex-end;
 }
+
+.tab {
+    width: 150px;
+    cursor: pointer;
+    display: inline-block;
+    background: black;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 15px 15px 0px 0px;
+    padding: 8px 20px;
+    padding-bottom: 10px;
+}
+
+#one:checked ~ .panels #level_1, #two:checked ~ .panels #level_2, #three:checked ~ .panels #level_3, #one:checked ~ .panels #one-panel,  #two:checked ~ .panels #two-panel,  #three:checked ~ .panels #three-panel, .panels #self {
+    display: block
+}
+
+#one:checked ~ .tabs #one-tab, #two:checked ~ .tabs #two-tab, #three:checked ~ .tabs #three-tab {
+    font-size: 18px;
+    color: black;
+    background: #ffcb0b;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.panels {
+    min-height: 200px;
+    background:#fffffff6;
+    box-shadow: 0.5rem 0.5rem 2rem #00000080;
+    border-radius: 3px;
+    border-top-right-radius: 40px; /* มุมบนขวา */
+    border-bottom-right-radius: 40px; /* มุมล่างขวา */
+    border-bottom-left-radius: 40px; /* มุมล่างซ้าย */
+    padding: 20px;  
+    overflow: hidden;
+}
+
+.panel {
+    display: none;
+    animation: fadein .8s;
+}
+
+.panel-title {
+    font-size: 1.5em;
+    font-weight: bold
+}
+
+.employee-select-modal {
+    max-width: 1350px;
+    width: 100%;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.borderbox {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border: none;
+}
+
+.custom-switch:focus {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.custom-switch:hover {
+    filter: none !important;
+}
+
 
 /* สำหรับหน้าจอที่ความกว้างสูงสุด 767pixel */
 @media screen and (max-width: 767px) {
@@ -247,6 +329,16 @@ input[type='radio'] {
     .bottomright {
         margin-top: 70px;
     }
+
+    #one:checked ~ .tabs #one-tab, #two:checked ~ .tabs #two-tab, #three:checked ~ .tabs #three-tab {
+        font-size: 12px;
+        padding-top: 15px;
+    }
+
+    .tab {
+        font-size: 10px;
+        width: 90px;
+    }
 }
 
 @media screen and (min-width: 1001px) and (max-width: 1200px) {
@@ -255,7 +347,21 @@ input[type='radio'] {
         width: 80%;
         display: block;
         margin: auto auto 10px auto;
-    } 
+    }
+
+    #one:checked ~ .tabs #one-tab, #two:checked ~ .tabs #two-tab, #three:checked ~ .tabs #three-tab {
+        font-size: 14px;
+        padding-top: 15px;
+    }
+
+    .tab {
+        font-size: 11px;
+        width: 110px;
+    }
+
+    .tabs {
+        z-index: 1;
+    }
 }
 
 @media screen and (max-width: 1400px) {

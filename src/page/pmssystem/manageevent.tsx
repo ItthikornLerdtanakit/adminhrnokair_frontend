@@ -104,7 +104,7 @@ const Manageevent = () => {
 
     return (
         <div className='d-flex'>
-            <Sidebar page={11} />
+            <Sidebar page={13} />
             {Page === 'one' && (
                 <Container fluid className='py-4 content flex-grow-1 margintop'>
                     <Row className='midpoint'>

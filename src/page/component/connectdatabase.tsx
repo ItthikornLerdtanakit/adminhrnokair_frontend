@@ -28,11 +28,10 @@ export const get_department = async () => {
         console.error(error);
     }
 }
-
-// ดึงข้อมูลมาเพื่อใช้ในหน้าจัดการแอพพลิเคชั่น 
-export const get_application_setting = async () => {
+// ดึงกลุ่มการใช้งาน
+export const get_group = async () => {
     try {
-        const response = await axios.get(ipaddress + import.meta.env.VITE_GET_APPLICATION_SETTING);
+        const response = await axios.get(ipaddress + import.meta.env.VITE_GET_GROUP);
         return response.data;
     } catch (error) {
         console.error(error);
@@ -48,6 +47,37 @@ export const save_group = async (group_name: string, group_employee: number[]) =
         console.error(error);
     }
 }
+
+// อัพเดทกลุ่มการใช้งาน
+export const update_group = async (group_id: number, group_name: string, group_employee: number[]) => {
+    try {
+        const response = await axios.put(ipaddress + import.meta.env.VITE_UPDATE_GROUP, { group_id, group_name, group_employee });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// ลบข้อมูล Group ออกไป
+export const delete_group = async (group_id: number) => {
+    try {
+        const response = await axios.delete(ipaddress + import.meta.env.VITE_DELETE_GROUP + group_id);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// ดึงข้อมูลมาเพื่อใช้ในหน้าจัดการแอพพลิเคชั่น 
+export const get_application_setting = async () => {
+    try {
+        const response = await axios.get(ipaddress + import.meta.env.VITE_GET_APPLICATION_SETTING);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 
 // บันทึกข้อมูลเว็บไซต์
 export const save_application = async (app_name: string, app_description: string, app_website: string, app_group: number, app_status: string) => {
@@ -122,7 +152,8 @@ export const add_employee = async (data: FormData) => {
 // อัพเดทข้อมูลพนักงานด้วยไฟล์ CSV
 export const add_employee_import = async (data: EmployeeItem[]) => {
     try {
-        const response = await axios.post(ipaddress + import.meta.env.VITE_ADD_EMPLOYEE_IMPORT, { data });
+        const response = await axios.post(ipaddress + import.meta.env.VITE_ADD_EMPLOYEE_IMPORT, data, { headers: { 'Content-Type': 'multipart/form-data' }});
+        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error(error);
@@ -189,6 +220,16 @@ export const update_emailconfig = async (data: EmailConfigItem[]) => {
     }
 }
 
+// ทดสอบ Email Service
+export const test_emailservice = async (data: EmailConfigItem[], emailto: string, description: string) => {
+    try {
+        const response = await axios.post(ipaddress + import.meta.env.VITE_TEST_EMAILSERVICE, { data, emailto, description });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 // ดึง Template ของ Email มาทั้งหมด
 export const get_emailtemplate = async () => {
     try {
@@ -219,6 +260,36 @@ export const update_emailtemplate = async (data: EmailTemplateItem[]) => {
     }
 }
 
+// ดึงรายชื่อ Admin Nokintranest
+export const get_admin_nokintranest = async () => {
+    try {
+        const response = await axios.get(ipaddress + import.meta.env.VITE_GET_ADMIN_NOKINTRANEST);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// บันทึกรายชื่อ Admin Nokintranest
+export const save_admin_nokintranest = async (nokintranest_code: string, nokintranest_name: string, nokintranest_position: string, nokintranest_department: string) => {
+    try {
+        const response = await axios.post(ipaddress + import.meta.env.VITE_SAVE_ADMIN_NOKINTRANEST, { nokintranest_code, nokintranest_name, nokintranest_position, nokintranest_department });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// ลบรายชื่อ Admin Nokintranest
+export const delete_admin_nokintranest = async (nokintranest_id: number) => {
+    try {
+        const response = await axios.delete(ipaddress + import.meta.env.VITE_DELETE_ADMIN_NOKINTRANEST + nokintranest_id);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 // ดึงข้อมูล Event ของการประเมินพนักงานภายในบริษัท
 export const get_event = async () => {
     try {
@@ -243,6 +314,66 @@ export const manage_event = async (id: number, topic: string, description: strin
 export const delete_event = async (event_id: number) => {
     try {
         const response = await axios.delete(ipaddress + import.meta.env.VITE_DELETE_EVENT + event_id);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// ดึงคำถามการประเมิน
+export const get_question_evaluation = async () => {
+    try {
+        const response = await axios.get(ipaddress + import.meta.env.VITE_GET_QUESTION_EVALUATION);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// อัพเดทเปิด-ปิดการประเมิน
+export const update_switch_evaluation = async (part: string, level: string, check: number) => {
+    try {
+        const response = await axios.put(ipaddress + import.meta.env.VITE_UPDATE_SWITCH_EVALUATION, { part, level, check });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// เพิ่มไฟล์ข้อกำหนดสำหรับการประเมิน
+export const managefile_evaluation = async (data: FormData) => {
+    try {
+        const response = await axios.put(ipaddress + import.meta.env.VITE_MANAGE_FILE_EVALUATION, data,  { headers: { 'Content-Type': 'multipart/form-data' }});
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// เพิ่มคำถามการประเมิน
+export const save_question_evaluation = async (topic: string, weight: number, description: string, part: string, level: string) => {
+    try {
+        const response = await axios.post(ipaddress + import.meta.env.VITE_SAVE_QUESTION_EVALUATION, { topic, weight, description, part, level });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// อัพเดทคำถามการประเมิน
+export const update_question_evaluation = async (id: number, topic: string, weight: number, description: string) => {
+    try {
+        const response = await axios.put(ipaddress + import.meta.env.VITE_UPDATE_QUESTION_EVALUATION, { id, topic, weight, description });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// ลบคำถามการประเมิน
+export const delete_question_evaluation = async (part_id: number) => {
+    try {
+        const response = await axios.delete(ipaddress + import.meta.env.VITE_DELETE_QUESTION_EVALUATION + part_id);
         return response.data;
     } catch (error) {
         console.error(error);

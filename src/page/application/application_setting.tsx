@@ -5,12 +5,11 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
-import type { DepartmentItem, GroupItem, ApplicationItem, MemberItem } from '../component/interfaces';
+import type { RawGroupItem, GroupItem, ApplicationItem } from '../component/interfaces';
 
 import Sidebar from '../component/sidebar';
 import { get_application_setting, update_application_select, delete_application } from '../component/connectdatabase';
 import { CustomSelect } from '../component/customselects';
-import ModalAddGroup from '../component/modal/modaladdgroup';
 import ModalAddApplication from '../component/modal/modaladdapplication';
 import ModalEditApplication from '../component/modal/modaleditapplication';
 import { alertsmall, alertquestion } from '../component/sweetalerttwo';
@@ -21,17 +20,16 @@ const Application_Settings = () => {
         get_database();
     }, []);
 
-    const [Department, setDepartment] = useState<DepartmentItem[]>([]);
     const [Group, setGroup] = useState<GroupItem[]>([]);
     const [Application, setApplication] = useState<ApplicationItem[]>([]);
-    const [Employee, setEmployee] = useState<MemberItem[]>([]);
     const [SelectGroup, setSelectGroup] = useState<{ [key: number]: number }>({});
-    const [SelectedStatus, setSelectedStatus] = useState< { [key: number]: string } >({});
+    const [SelectedStatus, setSelectedStatus] = useState<{ [key: number]: string }>({});
     const get_database = async () => {
         const result = await get_application_setting();
-        setEmployee(result.result_employee);
-        setDepartment(result.result_department);
-        setGroup(result.result_group);
+        const getUniqueGroups = (data: RawGroupItem[]): GroupItem[] => {
+            return [ ...new Map<number, GroupItem>(data.map(item => [item.group_id, { group_id: item.group_id, group_name: item.group_name }])).values() ];
+        };
+        setGroup(getUniqueGroups(result.result_group));
         setApplication(result.result_application);
         result.result_application.map((item: ApplicationItem) => {
             setSelectGroup(prev => ({ ...prev, [item.application_id]: item.group_id }));
@@ -51,20 +49,13 @@ const Application_Settings = () => {
             get_database();
         }
     };
-    
+
     const StatusOptions = [
         { value: 'active', label: 'Active', color: '#10b981' },
         { value: 'inactive', label: 'Inactive', color: '#6b7280' },
         { value: 'unavailable', label: 'Unavailable', color: '#ef4444' },
         { value: 'testing', label: 'Testing', color: '#eab308' }
     ];
-
-    // ป๊อปอัพของ Add Group
-    const [ShowModalAddGroup, setShowModalAddGroup] = useState(false);
-    const OpenModalAddGroup = () => {
-        setShowModalAddGroup(true);
-    }
-    const handleCloseModalAddGroup = () => setShowModalAddGroup(false);
 
     // ป๊อปอัพของ Add Application
     const [ShowModalAddApplication, setShowModalAddApplication] = useState(false);
@@ -105,11 +96,10 @@ const Application_Settings = () => {
                 <Row className='midpoint mt-4'>
                     <Col md={10} className='mt-2'>
                         <Row className='headers mb-3'>
-                            <Col md={6}>
+                            <Col md={9}>
                                 <p>Application</p>
                             </Col>
-                            <Col md={6} className='d-flex justify-content-end mb-2'>
-                                <Button variant='warning' style={{ height: 30, width: 130, fontSize: 13 }} className='me-2 w-100' onClick={OpenModalAddGroup}>Add Groups</Button>
+                            <Col md={3} className='d-flex justify-content-end mb-2'>
                                 <Button variant='warning' style={{ height: 30, width: 130, fontSize: 13 }} className='me-2 w-100' onClick={OpenModalAddApplication}>Add Application</Button>
                             </Col>
                         </Row>
@@ -152,7 +142,6 @@ const Application_Settings = () => {
                     </Col>
                 </Row>
             </div>
-            <ModalAddGroup ShowModal={ShowModalAddGroup} handleCloseModal={handleCloseModalAddGroup} Department={Department} Employee={Employee} get_database={get_database} />
             <ModalAddApplication ShowModal={ShowModalAddApplication} handleCloseModal={handleCloseModalAddApplication} StatusOptions={StatusOptions} GroupOptions={GroupOptions} get_database={get_database} />
             <ModalEditApplication ShowModal={ShowModalEditApplication} handleCloseModal={handleCloseModalEditApplication} get_database={get_database} SelectApplication={SelectApplication} />
         </div>

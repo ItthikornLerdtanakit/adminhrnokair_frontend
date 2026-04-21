@@ -28,6 +28,32 @@ export const loading = async (message: string) => {
     }
 };
 
+// แสดง Loading Popup ทดสอบอีเมล
+export const loading_testemail = async (message: string) => {
+    if (message === '' || message === undefined) {
+        Swal.fire({
+            title: 'Sending email… Please wait.',
+            html: `
+              <div class='spinner-border text-warning' role='status' style='width: 5rem; height: 5rem;'>
+                <span class='visually-hidden'>Loading...</span>
+              </div>
+            `,
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            customClass: {
+                popup: 'custom-loading-popup'
+            },
+            scrollbarPadding: false,
+        });
+    }
+    // ตรวจสอบข้อความตอบกลับ
+    if (message === 'success') {
+        // ปิด Popup Loading
+        Swal.close();
+    }
+};
+
 // ป้ายเล็กๆด้านขวาบน
 export const alertsmall = (icon: SweetAlertIcon, text: string) => {
     const Toast = Swal.mixin({
@@ -123,7 +149,25 @@ export const alertwarning = (text: string) => {
     });
 }
 
-// แจ้งเตือนเมื่อมีการ Error พร้อม Redireact
+// การแจ้งเตือนเมื่อทำอะไรสำเร็จ
+export const alertsuccess = (text: string) => {
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success m-2'
+        },
+        buttonsStyling: false
+    });
+    swalWithBootstrapButtons.fire({
+        title: 'Success!',
+        html: text,
+        icon: 'success',
+        showCancelButton: false,
+        showConfirmButton: true,
+        cancelButtonText: 'OK',
+    });
+}
+
+// แจ้งเตือนเมื่อมีการ Error
 export const alerterror = (text: string) => {
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {

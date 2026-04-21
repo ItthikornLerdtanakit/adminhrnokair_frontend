@@ -39,7 +39,7 @@ const Index = () => {
     }
 
     return (
-        <Container fluid className='index'>
+        <Container fluid className='index' style={{ height: '100vh' }}>
             <Navbars />
             <Row style={{ flex: 1 }} className='midpoint'>
                 <Col xs={11} md={9} xl={4} style={{ backgroundColor: 'white', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)', borderRadius: 15 }}>
@@ -57,7 +57,6 @@ const Index = () => {
                             </div>
                         </div>
                     </div>
-
                 </Col>
             </Row>
             <Footer />

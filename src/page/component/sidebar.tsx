@@ -1,18 +1,21 @@
 import { useRef, useEffect } from 'react';
-import { BsHouseDoor, BsPerson, BsPeople, BsBuilding, BsPersonPlus, BsPersonDash, BsCalendar, BsFileEarmarkText, BsPersonCheck, BsJournalText, BsBoxArrowRight, BsEnvelope } from 'react-icons/bs';
 
 import Button from 'react-bootstrap/Button';
 
 import { logout } from './connectdatabase';
 import { alertwarning, alertlogout } from './sweetalerttwo';
 
+import { BsHouseDoor, BsPerson, BsPeople, BsBuilding, BsPersonPlus, BsPersonDash, BsCalendar, BsFileEarmarkText, BsPersonCheck, BsJournalText, BsBoxArrowRight, BsEnvelope } from 'react-icons/bs';
+import { MdGroups } from 'react-icons/md';
+import { GrUserAdmin } from 'react-icons/gr';
+
 import logo from '../../assets/image/logofull.png';
 
-interface NUmberItem {
+interface NumberItem {
     page: number;
 }
 
-const Sidebar = (item: NUmberItem) => {
+const Sidebar = (item: NumberItem) => {
     const { page } = item;
     const sidebarRef = useRef<HTMLDivElement>(null);
     const toggleRef = useRef<HTMLButtonElement>(null);
@@ -66,24 +69,28 @@ const Sidebar = (item: NUmberItem) => {
                         
                         <li className='section-title' style={{ color: 'black' }}>Application Management</li>
                         <li><a className={'nav-link' + nav_active(page, 2)} href='/application_setting'><span className='me-2'><BsPeople /></span> Application Setting</a></li>
+                        <li><a className={'nav-link' + nav_active(page, 3)} href='/group'><span className='me-2'><MdGroups /></span> Group</a></li>
                         
                         <li className='section-title' style={{ color: 'black' }}>Employee Management</li>
-                        <li><a className={'nav-link' + nav_active(page, 3)} href='/employee'><span className='me-2'><BsPerson /></span> All Employee</a></li>
-                        <li><a className={'nav-link' + nav_active(page, 4)} href='/addemployee'><span className='me-2'><BsPersonPlus /></span>  Add Employee</a></li>
-                        <li><a className={'nav-link' + nav_active(page, 5)} href='/importemployee'><span className='me-2'><BsPeople /></span>  Import Employee</a></li>
-                        <li><a className={'nav-link' + nav_active(page, 6)} href='/probationemployee'><span className='me-2'><BsPeople /></span> Probation Employee</a></li>
-                        <li><a className={'nav-link' + nav_active(page, 7)} href='/employeeresign'><span className='me-2'><BsPersonDash /></span> Resigned Employee</a></li>
+                        <li><a className={'nav-link' + nav_active(page, 4)} href='/employee'><span className='me-2'><BsPerson /></span> All Employee</a></li>
+                        <li><a className={'nav-link' + nav_active(page, 5)} href='/addemployee'><span className='me-2'><BsPersonPlus /></span>  Add Employee</a></li>
+                        <li><a className={'nav-link' + nav_active(page, 6)} href='/importemployee'><span className='me-2'><BsPeople /></span>  Import Employee</a></li>
+                        <li><a className={'nav-link' + nav_active(page, 7)} href='/probationemployee'><span className='me-2'><BsPeople /></span> Probation Employee</a></li>
+                        <li><a className={'nav-link' + nav_active(page, 8)} href='/employeeresign'><span className='me-2'><BsPersonDash /></span> Resigned Employee</a></li>
 
                         <li className='section-title' style={{ color: 'black' }}>Department Management</li>
-                        <li><a className={'nav-link' + nav_active(page, 8)} href='/department'><span className='me-2'><BsBuilding /></span> Department</a></li>
+                        <li><a className={'nav-link' + nav_active(page, 9)} href='/department'><span className='me-2'><BsBuilding /></span> Department</a></li>
 
                         <li className='section-title' style={{ color: 'black' }}>Email Management</li>
-                        <li><a className={'nav-link' + nav_active(page, 9)} href='/emailconfig'><span className='me-2'><BsEnvelope /></span> Email Config</a></li>
-                        <li><a className={'nav-link' + nav_active(page, 10)} href='/emailtemplate'><span className='me-2'><BsEnvelope /></span> Email Template</a></li>
+                        <li><a className={'nav-link' + nav_active(page, 10)} href='/emailconfig'><span className='me-2'><BsEnvelope /></span> Email Config</a></li>
+                        <li><a className={'nav-link' + nav_active(page, 11)} href='/emailtemplate'><span className='me-2'><BsEnvelope /></span> Email Template</a></li>
+
+                        <li className='section-title' style={{ color: 'black' }}>NOKINTRANEST</li>
+                        <li><a className={'nav-link' + nav_active(page, 12)} href='/admin_nokintranest'><span className='me-2'><GrUserAdmin /></span> Admin Nokintranest</a></li>
 
                         <li className='section-title' style={{ color: 'black' }}>PMS System</li>
-                        <li><a className={'nav-link' + (page === 11 ? ' active' : '')} href='/manageevent'><span className='me-2'><BsCalendar /></span> Event Evaluation</a></li>
-                        <li><a className={'nav-link' + (page === 0 ? ' active' : '')} href='/' onClick={(e) => { e.preventDefault(); alertwarning('ยังไม่ได้เปิดการใช้งาน'); }}><span className='me-2'><BsFileEarmarkText /></span>  Question Evaluation</a></li>
+                        <li><a className={'nav-link' + (page === 13 ? ' active' : '')} href='/manageevent'><span className='me-2'><BsCalendar /></span> Event Evaluation</a></li>
+                        <li><a className={'nav-link' + (page === 14 ? ' active' : '')} href='/managequestion'><span className='me-2'><BsFileEarmarkText /></span>  Question Evaluation</a></li>
                         <li><a className={'nav-link' + (page === 0 ? ' active' : '')} href='/' onClick={(e) => { e.preventDefault(); alertwarning('ยังไม่ได้เปิดการใช้งาน'); }}><span className='me-2'><BsJournalText /></span>  System Logs</a></li>
 
                         <li className='section-title' style={{ color: 'black' }}>Crew Evaluation</li>

@@ -16,6 +16,7 @@ import AuthGuard from './page/component/authguard';
 import Index from './page/index';
 import Dashboard from './page/dashboard';
 import ApplicationSetting from './page/application/application_setting';
+import Group from './page/application/group';
 import Employee from './page/employeemanagement/employee';
 import AddEmployee from './page/employeemanagement/addemployee';
 import ImportEmployee from './page/employeemanagement/importemployee';
@@ -24,7 +25,9 @@ import EmployeeResign from './page/employeemanagement/employeeresign';
 import Department from './page/departmentmanagement/department';
 import EmailConfig from './page/emailmanagement/emailconfig';
 import EmailTemplate from './page/emailmanagement/emailtemplate';
+import AdminNokintranest from './page/nokintranest/admin_nokintranest';
 import ManageEvent from './page/pmssystem/manageevent';
+import ManageQuestion from './page/pmssystem/managequestion';
 import DepartmentKPI from './page/departmentkpi/departmentkpi';
 
 const Main = () => {
@@ -35,6 +38,7 @@ const Main = () => {
                     <Route path='/' element={<Index />}></Route>
                     <Route path='/dashboard' element={<Dashboard />}></Route>
                     <Route path='/application_setting' element={<ApplicationSetting />}></Route>
+                    <Route path='/group' element={<Group />}></Route>
                     <Route path='/employee' element={<Employee />}></Route>
                     <Route path='/addemployee' element={<AddEmployee />}></Route>
                     <Route path='/importemployee' element={<ImportEmployee />}></Route>
@@ -43,7 +47,9 @@ const Main = () => {
                     <Route path='/department' element={<Department />}></Route>
                     <Route path='/emailconfig' element={<EmailConfig />}></Route>
                     <Route path='/emailtemplate' element={<EmailTemplate />}></Route>
+                    <Route path='/admin_nokintranest' element={<AdminNokintranest />}></Route>
                     <Route path='/manageevent' element={<ManageEvent />}></Route>
+                    <Route path='/managequestion' element={<ManageQuestion />}></Route>
                     <Route path='/departmentkpi' element={<DepartmentKPI />}></Route>
                 </Route>
             </Routes>

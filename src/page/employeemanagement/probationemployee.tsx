@@ -88,7 +88,7 @@ const Probationemployee = () => {
 
     return (
         <div className='d-flex'>
-            <Sidebar page={6} />
+            <Sidebar page={7} />
             <Container fluid className='py-4 content flex-grow-1 margintop'>
                 <Card className='shadow-sm' style={{ border: 'none', width: '100%' }}>
                     <Card.Header className='bg-warning form-header pt-4'>

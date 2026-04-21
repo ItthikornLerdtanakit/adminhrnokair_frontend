@@ -81,7 +81,7 @@ const Employeeresign = () => {
 
     const [ShowModal, setShowModal] = useState(false);
     const [SelectEmployee, setSelectEmployee] = useState<EmployeeWithDepartment>();
-    const OpenModalEditApplication = (item: EmployeeWithDepartment) => {
+    const OpenModalEditEmployee = (item: EmployeeWithDepartment) => {
         setSelectEmployee(item);
         setShowModal(true);
     }
@@ -89,7 +89,7 @@ const Employeeresign = () => {
 
     return (
         <div className='d-flex'>
-            <Sidebar page={7} />
+            <Sidebar page={8} />
             <Container fluid className='py-4 content flex-grow-1 margintop'>
                 <Card className='shadow-sm' style={{ border: 'none', width: '100%' }}>
                     <Card.Header className='bg-warning form-header pt-4'>
@@ -147,9 +147,9 @@ const Employeeresign = () => {
                                                 </span>
                                             </td>
                                             <td className='text-center'>{formatdate(emp.employee_startdate)}</td>
-                                            <td className='text-center'>{formatdate(emp.employee_enddate)}</td>
+                                            <td className='text-center'>{formatdate(emp.employee_enddate || '')}</td>
                                             <td className='text-center'>
-                                                <Button size='sm' variant='outline-primary' onClick={() => OpenModalEditApplication(emp)}>
+                                                <Button size='sm' variant='outline-primary' onClick={() => OpenModalEditEmployee(emp)}>
                                                     <Edit size={16} />
                                                 </Button>
                                             </td>

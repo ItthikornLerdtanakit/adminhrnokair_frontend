@@ -48,6 +48,7 @@ const Addemployee = () => {
 
     const DepartmentOptions = useMemo(() => { return Departments.map(emp => ({ value: emp.department_id, label: emp.department_name })); }, [Departments]);
     const UserTypeOptions = [{ value: 'user', label: 'user' }, { value: 'admin', label: 'admin' }];
+    const UserTypeOptionsCrew = [{ value: 'user', label: 'user' }, { value: 'admin', label: 'admin' }, { value: 'OBE Sup', label: 'OBE Sup' }, { value: 'Team Leader', label: 'Team Leader' }, { value: 'Cabin Leader', label: 'Cabin Leader' }, { value: 'Cabin Crew', label: 'Cabin Crew' }];
     const LevelOptions = [{ value: 'level_1', label: 'level_1' }, { value: 'level_2', label: 'level_2' }, { value: 'level_3', label: 'level_3' }, { value: 'level_4', label: 'level_4' }, { value: 'level_5', label: 'level_5' }];
     const StatusOptions = [
         { value: 'employee', label: 'employee', color: '#10b981' },
@@ -84,11 +85,14 @@ const Addemployee = () => {
 
     // บันทึกข้อมูลพยักงาน
     const Submit = async () => {
-        const emp_proflie = document.getElementById('emp_proflie') as HTMLInputElement;
+        const emp_profile = document.getElementById('emp_profile') as HTMLInputElement;
         const emp_code = document.getElementById('emp_code') as HTMLInputElement;
         const emp_nameen = document.getElementById('emp_nameen') as HTMLInputElement;
         const emp_nameth = document.getElementById('emp_nameth') as HTMLInputElement;
         const emp_position = document.getElementById('emp_position') as HTMLInputElement;
+        const emp_nicknameen = document.getElementById('emp_nicknameen') as HTMLInputElement;
+        const emp_nicknameth = document.getElementById('emp_nicknameth') as HTMLInputElement;
+        const emp_telephone = document.getElementById('emp_telephone') as HTMLInputElement;
         const emp_supervisor = document.getElementById('emp_supervisor') as HTMLInputElement;
         const emp_email = document.getElementById('emp_email') as HTMLInputElement;
         const emp_annotation = document.getElementById('emp_annotation') as HTMLInputElement;
@@ -97,11 +101,14 @@ const Addemployee = () => {
         setDepartmentCheck(checkvalueselect(Department));
         setLevelCheck(checkvalueselect(Level));
         setUserTypeCheck(checkvalueselect(UserType));
-        if (!File || !emp_code.value || !emp_nameen.value || !emp_nameth.value || !emp_position.value || !emp_supervisor.value || !emp_email.value || !Status || !Department || !Level || !UserType || !emp_startdate.value) {
-            checkvalueinput(emp_proflie, FileName);
+        if (!File || !emp_code.value || !emp_nameen.value || !emp_nameth.value || !emp_nicknameen.value || !emp_nicknameth.value || !emp_telephone.value || !emp_position.value || !emp_supervisor.value || !emp_email.value || !Status || !Department || !Level || !UserType || !emp_startdate.value) {
+            checkvalueinput(emp_profile, FileName);
             checkvalueinput(emp_code, emp_code.value);
             checkvalueinput(emp_nameen, emp_nameen.value);
             checkvalueinput(emp_nameth, emp_nameth.value);
+            checkvalueinput(emp_nicknameen, emp_nicknameen.value);
+            checkvalueinput(emp_nicknameth, emp_nicknameth.value);
+            checkvalueinput(emp_telephone, emp_telephone.value);
             checkvalueinput(emp_position, emp_position.value);
             checkvalueinput(emp_supervisor, emp_supervisor.value);
             checkvalueinput(emp_email, emp_email.value);
@@ -116,6 +123,9 @@ const Addemployee = () => {
         formData.append('employee_nameen', emp_nameen.value);
         formData.append('employee_nameth', emp_nameth.value);
         formData.append('employee_position', emp_position.value);
+        formData.append('employee_nicknameen', emp_nicknameen.value);
+        formData.append('employee_nicknameth', emp_nicknameth.value);
+        formData.append('employee_telephone', emp_telephone.value);
         formData.append('employee_department', String(Department));
         formData.append('employee_supervisor', emp_supervisor.value);
         formData.append('employee_usertype', UserType)
@@ -138,6 +148,9 @@ const Addemployee = () => {
         const emp_code = document.getElementById('emp_code') as HTMLInputElement;
         const emp_nameen = document.getElementById('emp_nameen') as HTMLInputElement;
         const emp_nameth = document.getElementById('emp_nameth') as HTMLInputElement;
+        const emp_nicknameen = document.getElementById('emp_nicknameen') as HTMLInputElement;
+        const emp_nicknameth = document.getElementById('emp_nicknameth') as HTMLInputElement;
+        const emp_telephone = document.getElementById('emp_telephone') as HTMLInputElement;
         const emp_position = document.getElementById('emp_position') as HTMLInputElement;
         const emp_supervisor = document.getElementById('emp_supervisor') as HTMLInputElement;
         const emp_email = document.getElementById('emp_email') as HTMLInputElement;
@@ -146,9 +159,12 @@ const Addemployee = () => {
         setFileName('');
         setPreview('https://placehold.co/160x200?text=2inch');
         emp_code.value = '';
+        setStatus('');
         emp_nameen.value = '';
         emp_nameth.value = '';
-        setStatus('');
+        emp_nicknameen.value = '';
+        emp_nicknameth.value = '';
+        emp_telephone.value = '';
         emp_position.value = '';
         setDepartment(0);
         emp_supervisor.value = '';
@@ -161,7 +177,7 @@ const Addemployee = () => {
 
     return (
         <div className='d-flex'>
-            <Sidebar page={4} />
+            <Sidebar page={5} />
             <Container fluid className='py-4 content flex-grow-1 margintop'>
                 <Card className='shadow-sm' style={{ border: 'none', width: '100%' }}>
                     <Card.Header className='bg-warning form-header pt-4'>
@@ -197,6 +213,14 @@ const Addemployee = () => {
                             <Col md={6}>
                                 <Form className='mb-4' onSubmit={(e) => e.preventDefault()}>
                                     <Form.Group>
+                                        <Form.Label>Employee Status:</Form.Label>
+                                        <CustomSelect value={Status} onChange={(value) => { setStatus(value); setStatusCheck(!value); }} options={StatusOptions} width='100%' dot={true} error={StatusCheck} />
+                                    </Form.Group>
+                                </Form>
+                            </Col>
+                            <Col md={6}>
+                                <Form className='mb-4' onSubmit={(e) => e.preventDefault()}>
+                                    <Form.Group>
                                         <Form.Label>Employee NameEnglish:</Form.Label>
                                         <Form.Control type='text' id='emp_nameen' onChange={(e) => checkvalueinput(e.target, e.target.value)} placeholder='Enter your text here...' />
                                     </Form.Group>
@@ -213,8 +237,24 @@ const Addemployee = () => {
                             <Col md={6}>
                                 <Form className='mb-4' onSubmit={(e) => e.preventDefault()}>
                                     <Form.Group>
-                                        <Form.Label>Employee Status:</Form.Label>
-                                        <CustomSelect value={Status} onChange={(value) => { setStatus(value); setStatusCheck(!value); }} options={StatusOptions} width='100%' dot={true} error={StatusCheck} />
+                                        <Form.Label>Employee NickNameEnglish:</Form.Label>
+                                        <Form.Control type='text' id='emp_nicknameen' onChange={(e) => checkvalueinput(e.target, e.target.value)} placeholder='Enter your text here...' />
+                                    </Form.Group>
+                                </Form>
+                            </Col>
+                            <Col md={6}>
+                                <Form className='mb-4' onSubmit={(e) => e.preventDefault()}>
+                                    <Form.Group>
+                                        <Form.Label>Employee NickNameThai:</Form.Label>
+                                        <Form.Control type='text' id='emp_nicknameth' onChange={(e) => checkvalueinput(e.target, e.target.value)} placeholder='Enter your text here...' />
+                                    </Form.Group>
+                                </Form>
+                            </Col>
+                            <Col md={6}>
+                                <Form className='mb-4' onSubmit={(e) => e.preventDefault()}>
+                                    <Form.Group>
+                                        <Form.Label>Employee Telephone:</Form.Label>
+                                        <Form.Control type='text' id='emp_telephone' onChange={(e) => checkvalueinput(e.target, e.target.value)} placeholder='Enter your text here...' />
                                     </Form.Group>
                                 </Form>
                             </Col>
@@ -272,7 +312,7 @@ const Addemployee = () => {
                                 <Form className='mb-4' onSubmit={(e) => e.preventDefault()}>
                                     <Form.Group>
                                         <Form.Label>Employee UserType:</Form.Label>
-                                        <CustomSelect value={UserType} onChange={(value) => { setUserType(value); setUserTypeCheck(!value); }} options={UserTypeOptions} width='100%' dot={false} error={UserTypeCheck} />
+                                        <CustomSelect value={UserType} onChange={(value) => { setUserType(value); setUserTypeCheck(!value); }} options={Department === 24 ? UserTypeOptionsCrew : UserTypeOptions} width='100%' dot={false} error={UserTypeCheck} />
                                     </Form.Group>
                                 </Form>
                             </Col>

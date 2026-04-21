@@ -12,7 +12,7 @@ import Button from 'react-bootstrap/Button';
 import type { EmployeeWithDepartment } from '../component/interfaces';
 
 import Sidebar from '../component/sidebar';
-import { alertwarning, alertsmall, alerterror } from '../component/sweetalerttwo';
+import { alertwarning, alerterror, alertsuccess } from '../component/sweetalerttwo';
 import { CustomSelect } from '../component/customselects';
 import Pagination from '../component/pagination';
 import { add_employee_import } from '../component/connectdatabase';
@@ -34,7 +34,7 @@ const Importemployee = () => {
         { value: 100, label: 'Show 100 entries' }
     ];
 
-    const HeaderEmployee = ['NOKID', 'NameEnglish', 'NameThai', 'Position', 'Supervisor', 'DepartmentID', 'UserType', 'Email', 'Level', 'Status', 'StartDate'];
+    const HeaderEmployee = ['NOKID', 'NameEnglish', 'NameThai', 'NickNameEnglish', 'NickNameThai', 'Telephone', 'Position', 'Supervisor', 'DepartmentID', 'UserType', 'Email', 'Level', 'Status', 'StartDate'];
 
     const [Employee, setEmployee] = useState<EmployeeWithDepartment[]>([]);
     const [FileName, setFileName] = useState<string>('No Choose File CSV');
@@ -73,6 +73,9 @@ const Importemployee = () => {
             employee_code: item['NOKID'] ?? '',
             employee_nameen: item['NameEnglish'] ?? '',
             employee_nameth: item['NameThai'] ?? '',
+            employee_nicknameen: item['NickNameEnglish'] ?? '',
+            employee_nicknameth: item['NickNameThai'] ?? '',
+            employee_telephone: item['Telephone'] ?? '',
             employee_position: item['Position'] ?? '',
             employee_supervisor: item['Supervisor'] ?? '',
             department_id: Number(item['DepartmentID']),
@@ -82,7 +85,7 @@ const Importemployee = () => {
             employee_status: item['Status'] ?? '',
             employee_image: 'https://placehold.co/160x200?text=2inch',
             employee_startdate: item['StartDate'] ?? '',
-            employee_enddate: '0000-00-00'
+            employee_enddate: null
         })) as Partial<EmployeeWithDepartment>[];
         setEmployee(employees as EmployeeWithDepartment[]);
         setCurrentPage(1);
@@ -109,15 +112,18 @@ const Importemployee = () => {
         setCurrentPage(1);
     };
 
-
     const SaveImportEmployee = async () => {
+        const formData = new FormData();
+        formData.append('data', JSON.stringify(Employee));
         const result = await add_employee_import(Employee);
-        if (result === 'success') {
-            alertsmall('success', 'Add Employee Successfully.');
+        if (result.status === 'success') {
+            alertsuccess(`Add Employee Successfully. (Number of new records: ${result.insert_success}, Number of duplicate records: ${result.insert_old})`);
             const uploadfilecsv = document.getElementById('uploadfilecsv') as HTMLInputElement;
             setEmployee([]);
             setFileName('No Choose File CSV');
             uploadfilecsv.value = '';
+        } else if (result.status === 'no_new_data') {
+            alertwarning(`This file is data already exists in the database. (Number of new records: ${result.insert_success}, Number of duplicate records: ${result.insert_old})`);
         } else {
             alerterror('You cannot log in. Please contact the system administrator for assistance.');
         }
@@ -125,7 +131,7 @@ const Importemployee = () => {
 
     return (
         <div className='d-flex'>
-            <Sidebar page={5} />
+            <Sidebar page={6} />
             <Container fluid className='py-4 content flex-grow-1 margintop'>
                 <Card className='shadow-sm' style={{ border: 'none', width: '100%' }}>
                     <Card.Header className='bg-warning form-header pt-4'>
@@ -172,6 +178,9 @@ const Importemployee = () => {
                                                         <th className='text-nowrap'>NOKID</th>
                                                         <th className='text-nowrap'>Name English</th>
                                                         <th className='text-nowrap'>Name Thai</th>
+                                                        <th className='text-nowrap'>NickName English</th>
+                                                        <th className='text-nowrap'>NickName Thai</th>
+                                                        <th className='text-nowrap'>Telephone</th>
                                                         <th className='text-nowrap'>Position</th>
                                                         <th className='text-nowrap'>DepartmentID</th>
                                                         <th className='text-nowrap'>Supervisor</th>
@@ -189,6 +198,9 @@ const Importemployee = () => {
                                                             <td>{emp['employee_code']}</td>
                                                             <td>{emp['employee_nameen']}</td>
                                                             <td>{emp['employee_nameth']}</td>
+                                                            <td>{emp['employee_nicknameen']}</td>
+                                                            <td>{emp['employee_nicknameth']}</td>
+                                                            <td>{emp['employee_telephone']}</td>
                                                             <td>{emp['employee_position']}</td>
                                                             <td>{emp['employee_supervisor']}</td>
                                                             <td>{emp['department_id']}</td>

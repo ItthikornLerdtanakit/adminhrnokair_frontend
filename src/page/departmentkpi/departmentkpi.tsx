@@ -55,11 +55,11 @@ const SelectEvaluator = () => {
                                         <span>{item.department_code} - {item.department_name}</span>
                                         <SwitchSetting id={'department_' + item.department_code} switchonchange={switchonchange} values={switchValues['department_' + item.department_id] || false} />
                                     </div>
-                                    <div className="ds-tree">
+                                    <div className='ds-tree'>
                                         <ul>
                                             {SubDept?.filter(i => Math.floor(i.department_code / 10000) === Math.floor(item.department_code / 10000)).map(data => (
                                                 <li key={data.department_code}>
-                                                    <div className="ds-sub d-flex justify-content-between align-items-center">
+                                                    <div className='ds-sub d-flex justify-content-between align-items-center'>
                                                         <span>{data.department_id} - {data.department_name}</span>
                                                     </div>
                                                 </li>

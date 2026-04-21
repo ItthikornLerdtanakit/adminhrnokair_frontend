@@ -6,11 +6,11 @@ import type { CustomJwtPayload } from './interfaces';
 const ACCESS: Record<string, { allowed: string[]; default: string }> = {
     admin: { allowed: [
         '/dashboard',
-        '/application_setting',
+        '/application_setting', '/group',
         '/employee', '/addemployee', '/importemployee', '/probationemployee', '/employeeresign',
         '/department',
         '/emailconfig', '/emailtemplate',
-        '/manageevent'
+        '/manageevent', '/managequestion'
     ], default: '/dashboard' }
 };
 

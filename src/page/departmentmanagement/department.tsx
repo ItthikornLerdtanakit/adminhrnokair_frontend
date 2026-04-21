@@ -133,7 +133,7 @@ const Index = () => {
 
     return (
         <div className='d-flex'>
-            <Sidebar page={8} />
+            <Sidebar page={9} />
             <Container fluid className='py-4 margintop'>
                 <Row>
                     <Col md={12} className='midpoint'>

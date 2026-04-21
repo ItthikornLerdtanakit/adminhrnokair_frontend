@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import { save_group } from '../connectdatabase';
+import { save_group, update_group } from '../connectdatabase';
 import { checkvalueinput } from '../functions';
 import { alertsmall } from '../sweetalerttwo';
 
@@ -25,6 +25,9 @@ interface MemberItem extends BaseMemberItem {
 interface ModalItem extends BaseModalItem {
     Department: DepartmentItem[];
     Employee: MemberItem[];
+    GroupID?: number;
+    GroupName?: string;
+    EmployeeSelect?: number[];
     get_database: () => void;
 }
 
@@ -36,7 +39,7 @@ const statusOptions = [
 ];
 
 const ModalAddGroup = (item: ModalItem) => {
-    const { ShowModal, handleCloseModal, Department, Employee, get_database } = item;
+    const { ShowModal, handleCloseModal, Department, Employee, GroupID, GroupName, EmployeeSelect = [], get_database } = item;
     const [SelectedType, setSelectedType] = useState('individual');
 
     // ดึงข้อมูลพนักงานเพื่อนำมาแสดงผลเป็นตัวเลือกสำหรับเลือกพนักงานหลายคน
@@ -50,10 +53,22 @@ const ModalAddGroup = (item: ModalItem) => {
     const [Members, setMembers] = useState<MemberItem[]>([]);
     const [FilterMembers, setFilterMembers] = useState<MemberItem[]>([]);
     useEffect(() => {
-        setDepartmentWithCheck(Department.map(item => ({ ...item, department_check: false })));
-        setMembers(Employee.map(item => ({ ...item, employee_check: false })));
-        setFilterMembers(Employee.map(item => ({ ...item, employee_check: false })));
+        if (!ShowModal) return;
+        const mappedMembers = Employee.map(emp => ({
+            ...emp,
+            employee_check: EmployeeSelect.includes(emp.employee_id)
+        }));
+        setMembers(mappedMembers);
+        setFilterMembers(mappedMembers);
+        setDepartmentWithCheck(
+            Department.map(dept => {
+                const deptMembers = mappedMembers.filter(m => m.department_id === dept.department_id);
+                const allChecked = deptMembers.length > 0 && deptMembers.every(m => m.employee_check);
+                return { ...dept, department_check: allChecked };
+            })
+        );
     }, [ShowModal]);
+
 
     // เมื่อในกรณีที่กดปุ่ม Submit แล้วยังไม่มีข้อมูลพนักงานที่เลือกจึงทำให้เกิดกรอบแดง เลยจึงทำให้ต้องกำหนดค่าว่าถ้าพนักงานถูกเลือกตั้งแต่ 1 คนให้ลบกรอบแดงออก
     useEffect(() => {
@@ -139,24 +154,33 @@ const ModalAddGroup = (item: ModalItem) => {
             alertsmall('warning', 'Please complete or select all required information.');
             return;
         }
-        const result = await save_group(group_name.value, memberfilter);
-        if (result === 'success') {
-            handleCloseModal();
-            alertsmall('success', 'Save Group Successfully.');
-            get_database();
+        if (EmployeeSelect.length) {
+            const result = await update_group(GroupID!, group_name.value, memberfilter);
+            if (result === 'success') {
+                handleCloseModal();
+                alertsmall('success', 'Save Group Successfully.');
+                get_database();
+            }
+        } else {
+            const result = await save_group(group_name.value, memberfilter);
+            if (result === 'success') {
+                handleCloseModal();
+                alertsmall('success', 'Save Group Successfully.');
+                get_database();
+            }
         }
     }
 
     return (
         <Modal size='lg' show={ShowModal} onHide={handleCloseModal} enforceFocus={false} restoreFocus={false}>
-            <Modal.Header closeButton  className='bg-warning'>
-                <Modal.Title>Add Group</Modal.Title>
+            <Modal.Header closeButton className='bg-warning'>
+                <Modal.Title>{EmployeeSelect.length ? 'Edit' : 'Add'} Group</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form className='mb-4'>
                     <Form.Group>
                         <Form.Label>Group Name:</Form.Label>
-                        <Form.Control type='text' id='group_name' onChange={(e) => checkvalueinput(e.target, e.target.value)} placeholder='Enter your text here...' />
+                        <Form.Control type='text' id='group_name' onChange={(e) => checkvalueinput(e.target, e.target.value)}defaultValue={GroupName} placeholder='Enter your text here...' />
                     </Form.Group>
                 </Form>
                 <Form className='mb-4'>
@@ -182,7 +206,7 @@ const ModalAddGroup = (item: ModalItem) => {
                                 {FilterMembers.map(item => (
                                     <div key={item.employee_id} className={`p-2 mb-2 rounded cursor-pointer ${item.employee_check === true ? 'bg-warning' : 'bg-light'}`}>
                                         <label htmlFor={'check_employee_' + (item.employee_id)} className='custom-radio' style={{ marginTop: 'unset' }}>
-                                            <input type='checkbox' id={'check_employee_' + (item.employee_id)} defaultChecked={item.employee_check} className='radio-input' onChange={(e) => CheckEmployee(item.employee_id, e.target.checked)} />
+                                            <input type='checkbox' id={'check_employee_' + (item.employee_id)} checked={item.employee_check} className='radio-input' onChange={(e) => CheckEmployee(item.employee_id, e.target.checked)} />
                                             <span className='checkmark'></span>
                                             <span>{item.employee_nameen}</span>
                                         </label>
@@ -198,7 +222,7 @@ const ModalAddGroup = (item: ModalItem) => {
                                 {Category.map(item => (
                                     <div key={item.category_id} className={`p-2 mb-2 rounded cursor-pointer  ${item.category_check === true ? 'bg-warning' : 'bg-light'}`}>
                                         <label htmlFor={'check_' + item.category_value} className='custom-radio' style={{ marginTop: 'unset' }}>
-                                            <input type='checkbox' id={'check_' + item.category_value} defaultChecked={item.category_check} className='radio-input' onChange={(e) => CheckCategory(item.category_value, item.category_id, e.target.checked)} />
+                                            <input type='checkbox' id={'check_' + item.category_value} checked={item.category_check} className='radio-input' onChange={(e) => CheckCategory(item.category_value, item.category_id, e.target.checked)} />
                                             <span className='checkmark'></span>
                                             <span>{item.category_label}</span>
                                         </label>
@@ -216,14 +240,14 @@ const ModalAddGroup = (item: ModalItem) => {
                                         <div key={item.department_id} className={`p-2 mb-2 rounded cursor-pointer ${item.department_check === true ? 'bg-warning' : 'bg-light'}`}>
                                             {item.department_code % 10000 === 0 ? (
                                                 <label htmlFor={'check_' + (item.department_id)} className='custom-radio' style={{ marginTop: 'unset' }}>
-                                                    <input type='checkbox' id={'check_' + (item.department_id)} defaultChecked={item.department_check} className='radio-input' onChange={(e) => CheckDepartment(item.department_id, e.target.checked)}  />
+                                                    <input type='checkbox' id={'check_' + (item.department_id)} checked={item.department_check} className='radio-input' onChange={(e) => CheckDepartment(item.department_id, e.target.checked)} />
                                                     <span className='checkmark'></span>
                                                     <span>{item.department_code} - {item.department_name}</span>
                                                 </label>
                                             ) : (
                                                 <label htmlFor={'check_' + (item.department_id)} className='custom-radio' style={{ marginTop: 'unset' }}>
                                                     <span style={{ fontSize: 14, color: '#6c757d', marginRight: 5 }}>└─</span>
-                                                    <input type='checkbox' id={'check_' + (item.department_id)} defaultChecked={item.department_check} className='radio-input' onChange={(e) => CheckDepartment(item.department_id, e.target.checked)} />
+                                                    <input type='checkbox' id={'check_' + (item.department_id)} checked={item.department_check} className='radio-input' onChange={(e) => CheckDepartment(item.department_id, e.target.checked)} />
                                                     <span className='checkmark'></span>
                                                     <span>{item.department_code} - {item.department_name}</span>
                                                 </label>
@@ -234,7 +258,7 @@ const ModalAddGroup = (item: ModalItem) => {
                             </div>
                         </Col>
                     ) : null}
-                    
+
                     <Col lg={SelectedType === 'all' ? 12 : 5}>
                         <h6 className='fw-bold'>Employees to be selected</h6>
                         <div id='employee_select' className='rounded p-3' style={{ height: 300, overflowY: 'auto', border: '1px solid rgb(222, 226, 230)' }}>

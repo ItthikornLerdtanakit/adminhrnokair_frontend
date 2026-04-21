@@ -53,7 +53,7 @@ const Employee = () => {
 
     // ฟังก์ชันค้นหา
     const SearchEmployee = useMemo(() => {
-        return Employee.filter(emp => 
+        return Employee.filter(emp =>
             emp.employee_code.toLowerCase().includes(SearchTerm) ||
             emp.employee_nameen.toLowerCase().includes(SearchTerm.toLowerCase()) ||
             emp.employee_nameth.includes(SearchTerm) ||
@@ -85,9 +85,40 @@ const Employee = () => {
     }
     const handleCloseModal = () => setShowModal(false);
 
+    const escapeCSV = (value: any): string => {
+        if (value === null || value === undefined) return '';
+        const stringValue = String(value);
+        // ถ้ามี , หรือ " หรือขึ้นบรรทัดใหม่ ให้ครอบด้วย "
+        if (/[",\n]/.test(stringValue)) {
+            return `"${stringValue.replaceAll('"', '""')}"`;
+        }
+        return stringValue;
+    };
+
+    const exportToCSV = (data: EmployeeWithDepartment[], filename = 'export.csv'): void => {
+        if (!data.length) return;
+        // ตั้งหัวข้อ (header)
+        const headers = ['NOKID', 'NameEnglish', 'NameThai', 'NickNameEnglish', 'NickNameThai', 'Telephone', 'Position', 'Supervisor', 'DepartmentID', 'UserType', 'Email', 'Level', 'Status', 'StartDate'];
+        // แปลงข้อมูลเป็นแถว
+        const rows = data.map(item =>
+            [item.employee_code, item.employee_nameen, item.employee_nameth, item.employee_nicknameen, item.employee_nicknameth, item.employee_telephone, escapeCSV(item.employee_position), item.employee_supervisor, item.department_id, item.employee_usertype, item.employee_email, item.employee_level, item.employee_status, item.employee_startdate].join(',')
+        );
+        // รวม header + rows
+        const csvContent = [headers.join(','), ...rows].join('\n');
+        // สร้างไฟล์และดาวน์โหลด
+        const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', filename);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    };
+
     return (
         <div className='d-flex'>
-            <Sidebar page={3} />
+            <Sidebar page={4} />
             <Container fluid className='py-4 content flex-grow-1 margintop'>
                 <Card className='shadow-sm' style={{ border: 'none', width: '100%' }}>
                     <Card.Header className='bg-warning form-header pt-4'>
@@ -107,14 +138,21 @@ const Employee = () => {
                                 </Form>
                             </Col>
                             <Col md={4}>
-                                <CustomSelect value={ItemsPerPage} onChange={value => { setItemsPerPage(value); }} options={EntriesOptions} width='100%' dot={true} error={false} />
+                                <Row>
+                                    <Col className='col-8'>
+                                        <CustomSelect value={ItemsPerPage} onChange={value => { setItemsPerPage(value); }} options={EntriesOptions} width='100%' dot={true} error={false} />
+                                    </Col>
+                                    <Col className='col-4'>
+                                        <Button variant='success' style={{ width: '100%' }} onClick={() => exportToCSV(Employee)}>Export CSV</Button>
+                                    </Col>
+                                </Row>
                             </Col>
                         </Row>
                         <Row style={{ overflowX: 'auto' }}>
                             <Table striped hover className='align-middle tbresponsive'>
                                 <thead className='table-dark'>
                                     <tr className='text-center'>
-                                        <th>EmployeeCode{FilterEmployees.length}</th>
+                                        <th>EmployeeCode</th>
                                         <th>Name_English</th>
                                         <th>Position</th>
                                         <th>Department</th>
@@ -138,8 +176,8 @@ const Employee = () => {
                                             <td className='text-center'><small className='text-muted'>{emp.employee_supervisor}</small></td>
                                             <td className='text-center'>{emp.employee_usertype}</td>
                                             <td><small>{emp.employee_email}</small></td>
-                                            <td>{emp.employee_level}</td>
-                                            <td>
+                                            <td className='text-center'>{emp.employee_level}</td>
+                                            <td className='text-center'>
                                                 <span className={`badge bg-${colorstatus(emp.employee_status)}`}>
                                                     {emp.employee_status}
                                                 </span>

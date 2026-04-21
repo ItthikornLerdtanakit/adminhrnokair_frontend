@@ -12,8 +12,8 @@ import type { EmailConfigItem } from '../component/interfaces';
 import Sidebar from '../component/sidebar';
 import { checkvalueinput } from '../component/functions';
 import { CustomSelect } from '../component/customselects';
-import { get_emailconfig, update_emailconfig } from '../component/connectdatabase';
-import { alertsmall, alerterror } from '../component/sweetalerttwo';
+import { get_emailconfig, update_emailconfig, test_emailservice } from '../component/connectdatabase';
+import { loading, loading_testemail, alertsmall, alerterror } from '../component/sweetalerttwo';
 
 import { Mail } from 'lucide-react';
 
@@ -28,11 +28,13 @@ const Emailconfig = () => {
     const [Service, setService] = useState<string>('');
     const [IPAddress, setIPAddress] = useState<string>('');
     const get_database = async () => {
+        loading('');
         const result = await get_emailconfig();
         setEmailConfig(result);
         setService(result[0].emailconfig_service);
         setIPAddress(result[0].emailconfig_ipaddress);
         setCheckUser(Boolean(result[0].emailconfig_checkuser));
+        loading('success');
     }
 
     useEffect(() => {
@@ -51,6 +53,7 @@ const Emailconfig = () => {
 
     // บันทึกข้อมูลพยักงาน
     const save_emailconfig = async () => {
+        loading('')
         const mc_user = document.getElementById('mc_user') as HTMLInputElement;
         const mc_pass = document.getElementById('mc_pass') as HTMLInputElement;
         const mc_address = document.getElementById('mc_address') as HTMLInputElement;
@@ -80,9 +83,45 @@ const Emailconfig = () => {
         }
     }
 
+    // บันทึกข้อมูลพยักงาน
+    const testemailconfig = async () => {
+        loading_testemail('')
+        const mc_user = document.getElementById('mc_user') as HTMLInputElement;
+        const mc_pass = document.getElementById('mc_pass') as HTMLInputElement;
+        const mc_address = document.getElementById('mc_address') as HTMLInputElement;
+        const mc_name = document.getElementById('mc_name') as HTMLInputElement;
+        const mc_emailto = document.getElementById('mc_emailto') as HTMLInputElement;
+        const mc_description = document.getElementById('mc_description') as HTMLInputElement;
+        if (!Service || !mc_address.value || !mc_name.value || !mc_emailto.value || !mc_description.value) {
+            checkvalueinput(mc_address, mc_address.value);
+            checkvalueinput(mc_name, mc_name.value);
+            checkvalueinput(mc_emailto, mc_emailto.value);
+            checkvalueinput(mc_description, mc_description.value);
+            alertsmall('warning', 'Please complete or select all required information.');
+            return;
+        }
+        // ส่งข้อมูลไป
+        const data = [{
+            emailconfig_id: EmailConfig[0].emailconfig_id,
+            emailconfig_service: Service,
+            emailconfig_ipaddress: IPAddress,
+            emailconfig_checkuser: Number(CheckUser),
+            emailconfig_user: CheckUser ? '-' : mc_user.value,
+            emailconfig_apppass: CheckUser ? '-' : mc_pass.value,
+            emailconfig_address: mc_address.value,
+            emailconfig_name: mc_name.value
+        }];
+        const result = await test_emailservice(data, mc_emailto.value, mc_description.value);
+        if (result === 'success') {
+            alertsmall('success', 'Test Email Successfully.');
+        } else {
+            alerterror('You cannot log in. Please contact the system administrator for assistance.');
+        }
+    }
+
     return (
         <div className='d-flex'>
-            <Sidebar page={9} />
+            <Sidebar page={10} />
             <Container fluid className='py-4 content flex-grow-1 margintop'>
                 <Card className='shadow-sm' style={{ border: 'none', width: '100%' }}>
                     <Card.Header className='bg-warning form-header pt-4'>
@@ -178,7 +217,7 @@ const Emailconfig = () => {
                                 </Form>
                             </Col>
                             <Col md={12} className='mb-4 midpoint'>
-                                <Button variant='warning' style={{ width: 150 }} onClick={save_emailconfig}>Test</Button>
+                                <Button variant='warning' style={{ width: 150 }} onClick={testemailconfig}>Test</Button>
                             </Col>
                         </Row>
                     </Card.Body>

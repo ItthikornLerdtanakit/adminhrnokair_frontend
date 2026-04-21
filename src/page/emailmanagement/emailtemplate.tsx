@@ -72,7 +72,7 @@ const Emailtemplate = () => {
     }
 
     const getPlaceholders = (str: string): string[] => [...str.matchAll(/\[([^\]]+)\]/g)].map(m => m[1]);
-    const getMissing = (str: string, values: Record<string, string>): string[] => getPlaceholders(str).filter(p => !values[p]);
+    // const getMissing = (str: string, values: Record<string, string>): string[] => getPlaceholders(str).filter(p => !values[p]);
     const fillTemplate = (str: string, values: Record<string, string>): string =>str.replaceAll(/\[([^\]]+)\]/g, (_, p) => values[p] ?? `[${p}]`);
 
     const [Placeholders, setPlaceholders] = useState<string[]>([]);
@@ -153,7 +153,7 @@ const Emailtemplate = () => {
 
     return (
         <div className='d-flex'>
-            <Sidebar page={10} />
+            <Sidebar page={11} />
             <Container fluid className='py-4 content flex-grow-1 margintop'>
                 <Card className='shadow-sm' style={{ border: 'none', width: '100%' }}>
                     <Card.Header className='bg-warning form-header pt-4'>
